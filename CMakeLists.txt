@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
+add_compile_options(-Wno-incompatible-pointer-types)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -8,7 +9,6 @@ set(CMAKE_C_STANDARD 11)
 
 
 file(GLOB STD_SRC CONFIGURE_DEPENDS
-     #"std/include/*.h"
      "std/*.c"
 )
 include_directories("std/include")
