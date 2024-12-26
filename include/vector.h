@@ -7,6 +7,7 @@
 
 #include "private/linkage_pre.h"
 
+// Probably should be moved into a .c file
 static const int grow_factor = 2;
 
 struct vector {

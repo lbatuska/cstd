@@ -1,3 +1,5 @@
+#ifndef _LINKAGE_PRE_PRIVATE_H_
+#define _LINKAGE_PRE_PRIVATE_H_
 
 #if defined __clang__ && !defined __cplusplus
 #pragma clang diagnostic push
@@ -10,3 +12,5 @@
 #pragma GCC diagnostic warning "-Wextra"
 #pragma GCC diagnostic warning "-Wincompatible-pointer-types"
 #endif
+
+#endif //_LINKAGE_PRE_PRIVATE_H_

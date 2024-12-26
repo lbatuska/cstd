@@ -4,12 +4,15 @@
 
 #include "list.h"
 
+#include "debug.h"
 #include "vector.h"
 
 void list_test();
 void vector_test();
 
 int main(int argc, char *argv[]) {
+
+  debug_printf("Debug print enabled!\n");
 
   vector_test();
   list_test();

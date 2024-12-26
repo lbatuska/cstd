@@ -3,6 +3,11 @@
 #include "config.h"
 #include "private/linkage_pre.h"
 
+// We can also include the system endian.h
+// #ifdef __GNUC__
+// #include_next <endian.h>
+// #endif
+
 #define __little_endian 0x41424344UL
 #define __big_endian 0x44434241UL
 #define __pdp_endian 0x42414443UL
@@ -27,4 +32,5 @@
 #endif
 
 #include "private/linkage_post.h"
+
 #endif //_ENDIAN_H_
