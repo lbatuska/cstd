@@ -30,6 +30,14 @@ void __vector_expand_if_full(struct vector *vector);
     vector.size++;                                                             \
   }
 
+#define vector_emplace_back(vector, element_type, ...)                         \
+  {                                                                            \
+    __vector_expand_if_full(&vector);                                          \
+    *(element_type *)(vector.data + (vector.size * vector.elem_size)) =        \
+        (element_type){__VA_ARGS__};                                           \
+    vector.size++;                                                             \
+  }
+
 #define vector_push_front(vector, element)                                     \
   {                                                                            \
     trace_printf_ascend(                                                       \

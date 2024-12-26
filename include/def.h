@@ -17,7 +17,7 @@
 // Assert sizes are correct before typedefs
 static struct {
   compile_assert_size(sizeof(long long) == (64 / 8));
-  compile_assert_size(sizeof(long) == WORDSIZE / 8);
+  compile_assert_size(sizeof(long) == (WORDSIZE / 8));
   compile_assert_size(sizeof(int) == (32 / 8));
   compile_assert_size(sizeof(short) == (16 / 8));
   compile_assert_size(sizeof(char) == (8 / 8));
