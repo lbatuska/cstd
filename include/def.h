@@ -2,6 +2,7 @@
 #define _DEF_H_
 #include "config.h"
 #include "private/linkage_pre.h"
+#include "wordsize.h"
 
 #if defined __clang__ && !defined __cplusplus
 #pragma clang diagnostic ignored "-Wmissing-declarations"
@@ -16,6 +17,7 @@
 // Assert sizes are correct before typedefs
 static struct {
   compile_assert_size(sizeof(long long) == (64 / 8));
+  compile_assert_size(sizeof(long) == WORDSIZE / 8);
   compile_assert_size(sizeof(int) == (32 / 8));
   compile_assert_size(sizeof(short) == (16 / 8));
   compile_assert_size(sizeof(char) == (8 / 8));
@@ -33,6 +35,7 @@ typedef signed int int32;
 typedef unsigned int uint32;
 typedef signed long long int64;
 typedef unsigned long long uint64;
+typedef unsigned long sizet;
 
 #include "private/linkage_post.h"
 #endif //_DEF_H_

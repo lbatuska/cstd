@@ -6,22 +6,16 @@
 #include "private/linkage_pre.h"
 
 #if TRACE
-// We place the trace_depth definition inside the if because it was not meant to
-// be manipulated from external code
-extern int trace_depth;
-#define trace_ascend()                                                         \
-  do {                                                                         \
-    trace_depth++;                                                             \
-  } while (0)
+void __trace_ascend();
+void __trace_descend();
+int trace_depth_get();
 
-#define trace_descend()                                                        \
-  do {                                                                         \
-    trace_depth--;                                                             \
-  } while (0)
+#define trace_ascend() __trace_ascend();
+#define trace_descend() __trace_descend();
 
 #define trace_printf(fmt, ...)                                                 \
   do {                                                                         \
-    for (int i = 0; i < trace_depth; ++i) {                                    \
+    for (int i = 0; i < trace_depth_get(); ++i) {                              \
       printf("\t");                                                            \
     }                                                                          \
     printf("|> ");                                                             \
@@ -30,7 +24,7 @@ extern int trace_depth;
 
 #define trace_fprintf(stream, fmt, ...)                                        \
   do {                                                                         \
-    for (int i = 0; i < trace_depth; ++i) {                                    \
+    for (int i = 0; i < trace_depth_get(); ++i) {                              \
       fprintf(stream, "\t");                                                   \
     }                                                                          \
     fprintf(stream, "|> ");                                                    \

@@ -1,14 +1,11 @@
-#ifndef _VECTOR_H
-#define _VECTOR_H
+#ifndef _VECTOR_H_
+#define _VECTOR_H_
 #include "compile.h"
 #include "wordsize.h"
 #include <stdlib.h>
 #include <string.h>
 
 #include "private/linkage_pre.h"
-
-// Probably should be moved into a .c file
-static const int grow_factor = 2;
 
 struct vector {
   size_t cap;
@@ -23,17 +20,11 @@ struct vector {
                         .data = malloc(sizeof(element) * capacity),            \
                         .elem_size = sizeof(element)}
 
-#define __vector_expand_if_full(vector)                                        \
-  {                                                                            \
-    if (vector.cap == vector.size) {                                           \
-      vector.cap = vector.cap * grow_factor;                                   \
-      vector.data = realloc(vector.data, vector.cap * vector.elem_size);       \
-    }                                                                          \
-  }
+void __vector_expand_if_full(struct vector *vector);
 
 #define vector_push_back(vector, element)                                      \
   {                                                                            \
-    __vector_expand_if_full(vector);                                           \
+    __vector_expand_if_full(&vector);                                          \
     void *ptr = vector.data + (vector.size * vector.elem_size);                \
     memcpy(ptr, &element, vector.elem_size);                                   \
     vector.size++;                                                             \
@@ -41,11 +32,15 @@ struct vector {
 
 #define vector_push_front(vector, element)                                     \
   {                                                                            \
-    __vector_expand_if_full(vector);                                           \
+    trace_printf_ascend(                                                       \
+        "vector_push_front() -> Moving %zu bytes by %zu bytes\n",              \
+        vector.size *vector.elem_size, vector.elem_size);                      \
+    __vector_expand_if_full(&vector);                                          \
     memmove(vector.data + vector.elem_size, vector.data,                       \
             vector.size * vector.elem_size);                                   \
     memcpy(vector.data, &element, vector.elem_size);                           \
     vector.size++;                                                             \
+    trace_descend();                                                           \
   }
 
 #define vector_for_each(pos, vector)                                           \
@@ -73,4 +68,4 @@ static inline void *vector_at(struct vector vec, size_t elem) {
   }
 
 #include "private/linkage_post.h"
-#endif //_VECTOR_H
+#endif //_VECTOR_H_
