@@ -2,6 +2,7 @@
 #define _LIST_H_
 #include "config.h"
 #include "container_of.h"
+#include "def.h"
 #include "private/linkage_pre.h"
 #include <stdatomic.h>
 
@@ -70,9 +71,9 @@ static inline void list_prepend(struct list_head *head,
        pos = list_next_entry(pos, member))
 
 // Head is not counted
-static inline size_t list_len(struct list_head *head) {
+static inline sizet list_len(struct list_head *head) {
   struct list_head *pos;
-  size_t count = 0;
+  sizet count = 0;
   list_for_each(pos, head) count++;
   return count;
 }

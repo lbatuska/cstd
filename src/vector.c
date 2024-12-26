@@ -1,7 +1,7 @@
 #include "vector.h"
 #include "trace.h"
 
-static const int grow_factor = 2;
+static const uint32 grow_factor = 2;
 
 void __vector_expand_if_full(struct vector *vector) {
   if (vector->cap == vector->size) {

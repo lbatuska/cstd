@@ -1,6 +1,7 @@
 #ifndef _VECTOR_H_
 #define _VECTOR_H_
 #include "compile.h"
+#include "def.h"
 #include "wordsize.h"
 #include <stdlib.h>
 #include <string.h>
@@ -8,9 +9,9 @@
 #include "private/linkage_pre.h"
 
 struct vector {
-  size_t cap;
-  size_t size;
-  const size_t elem_size;
+  sizet cap;
+  sizet size;
+  const sizet elem_size;
   void *data; // should be allocated as cap * elem_size
 };
 
@@ -57,7 +58,7 @@ void __vector_expand_if_full(struct vector *vector);
 
 #if WORDSIZE >= 32
 
-static inline void *vector_at(struct vector vec, size_t elem) {
+static inline void *vector_at(struct vector vec, sizet elem) {
   if (elem >= vec.size)
     return NULL;
   return (vec.data + (vec.elem_size * elem));
