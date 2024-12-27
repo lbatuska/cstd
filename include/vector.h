@@ -4,6 +4,7 @@
 #include "def.h"
 #include "trace.h"
 #include "wordsize.h"
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -65,11 +66,11 @@ void __vector_expand_if_full(struct vector *vector);
        pos != vector.data + (vector.size * vector.elem_size); pos++)
 
 #if WORDSIZE >= 32
-static inline void *vector_at(struct vector vec, sizet elem) {
-  trace_printf("vector_at(vec, %lu)\n", elem);
-  if (elem >= vec.size)
+static inline void *vector_at(struct vector vec, sizet index) {
+  trace_printf("vector_at(vec, %lu)\n", index);
+  if (index >= vec.size)
     return NULL;
-  return (vec.data + (vec.elem_size * elem));
+  return (vec.data + (vec.elem_size * index));
 }
 #else
 // Probably we don't want to pass around a 32bit struct if word size is smaller
@@ -85,6 +86,62 @@ static inline void *vector_at(struct vector vec, sizet elem) {
     elem = *(typeof(elem) *)vector_at(vector, vector.size - 1);                \
     vector.size--;                                                             \
   }
+
+static inline void vector_erase(struct vector *vec, sizet index) {
+  if (index >= vec->size) {
+    trace_printf("vector_erase(vector, %lu) -> Nothing to do!\n", index);
+    goto end;
+  }
+  trace_printf("vector_erase(vector, %lu)\n", index);
+  if (index == vec->size - 1) {
+    vec->size--;
+    goto end;
+  }
+  // dest (base + index*elem size)
+  // src (base + (index+1) * elem size)
+  // , src, size -> size-index * elem_size
+  //
+  memmove(vec->data + (index * vec->elem_size),
+          vec->data + ((index + 1) * vec->elem_size),
+          (vec->size - (index + 1)) * vec->elem_size);
+  vec->size--;
+end:
+  trace_descend();
+  return;
+}
+
+// First element
+static inline void *vector_front(struct vector *vec) { return vec->data; }
+
+// Last element
+static inline void *vector_back(struct vector *vec) {
+  return (vec->data + ((vec->size - 1) * vec->elem_size));
+}
+
+// Next element
+static inline void *vector_next(struct vector *vec, void *elem) {
+  return (elem + vec->elem_size);
+}
+
+// Previous
+static inline void *vector_prev(struct vector *vec, void *elem) {
+  return (elem - vec->elem_size);
+}
+
+static inline int8 vector_valid_ptr(struct vector *vec, void *ptr) {
+  if (ptr < vec->data)
+    goto no;
+  if (ptr > (vec->data + (vec->size - 1) * vec->elem_size))
+    goto no;
+  // If in bounds memory has to be divisable by elem_size
+  if ((uintptrt)(ptr - vec->data) % vec->elem_size != 0)
+    goto no;
+
+  return 1;
+// Not valid
+no:
+  return 0;
+}
 
 #include "private/linkage_post.h"
 #endif //_VECTOR_H_

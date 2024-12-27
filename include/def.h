@@ -3,6 +3,7 @@
 #include "config.h"
 #include "private/linkage_pre.h"
 #include "wordsize.h"
+#include <stdint.h>
 
 // For unsigned types: max = all bits set to 1, min = 0
 // For signed types: max = (2^bits - 1), min = -(2^bits - 1) - 1
@@ -42,6 +43,9 @@ typedef unsigned long sizet;
 typedef typeof((int *)0 - (int *)0) ptrdifft;
 #define MAX_PTRDIFF ((ptrdifft)((1 << (sizeof(ptrdifft) * 8 - 1)) - 1))
 #define MIN_PTRDIFF ((ptrdifft)(-(1 << (sizeof(ptrdifft) * 8 - 1))))
+
+typedef unsigned long uintptrt;
+typedef long intptrt;
 
 #include "private/linkage_post.h"
 #endif //_DEF_H_

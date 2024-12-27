@@ -50,7 +50,12 @@ void vector_test() {
     trace_descend();
   }
 
-  printf("Reversed vector\n");
+  printf("Reversed vector (3rd and 6th element is removed\n");
+  // 3rd element is 12
+  vector_erase(&second_test_vec, 3);
+  // 6ht now 5th element is 6
+  vector_erase(&second_test_vec, 5);
+
   vector_for_each(tmp, second_test_vec) { printf("Vec val: %i \n", tmp->val); }
 }
 
