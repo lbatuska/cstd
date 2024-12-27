@@ -1,3 +1,3 @@
 #include "debug.h"
 
-int DEBUG = 1;
+uint8 DEBUG = 0;

@@ -1,10 +1,10 @@
 #ifndef _CONFIG_H_
 #define _CONFIG_H_
 
-// Enables #warning and compile time extra messages (can also fail compilation
-// in some cases)
+// Enables #warning and compile time extra messages (can also intentionally fail
+// compilation in some cases where cannot guarantee defined behavior)
 #ifndef DEBUG_COMPILE
-#define DEBUG_COMPILE 1
+#define DEBUG_COMPILE 0
 #endif
 
 // Enables runtime print messages

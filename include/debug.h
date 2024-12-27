@@ -1,11 +1,12 @@
 #ifndef _DEBUG_H_
 #define _DEBUG_H_
 #include "config.h"
+#include "def.h"
 #include <stdio.h>
 
 #include "private/linkage_pre.h"
 
-extern int DEBUG;
+extern uint8 DEBUG;
 
 #if DEBUG_MESSAGES
 #define debug_printf(fmt, ...)                                                 \

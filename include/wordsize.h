@@ -33,7 +33,7 @@
 #endif // IF WORDSIZE is defined
 // ---------------------------------------------
 
-#if !defined(WORDSIZE) && IS_64_BIT
+#if !defined(WORDSIZE) && (defined(IS_64_BIT) && IS_64_BIT)
 
 #define WORDSIZE 64
 #define IS_32_BIT 0
@@ -44,7 +44,7 @@
 #endif
 // ---------------------------------------------
 
-#if !defined(WORDSIZE) && IS_32_BIT
+#if !defined(WORDSIZE) && (defined(IS_32_BIT) && IS_32_BIT)
 
 #define WORDSIZE 32
 #define IS_64_BIT 0
