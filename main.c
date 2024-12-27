@@ -5,6 +5,7 @@
 #include "list.h"
 
 #include "debug.h"
+#include "trace.h"
 #include "vector.h"
 
 void list_test();
@@ -41,10 +42,12 @@ void vector_test() {
 
   printf("Normal vector\n");
   vector_for_each(tmp, test_vec) {
+    trace_ascend();
     printf("Vec val: %i \n", tmp->val);
 
     // Create reversed vector
     vector_push_front(second_test_vec, *tmp);
+    trace_descend();
   }
 
   printf("Reversed vector\n");
@@ -75,11 +78,13 @@ void list_test() {
   struct list_test_struct *tmp2;
   printf("Normal list\n");
   list_for_each_entry(tmp, &test_head, head) {
+    trace_ascend();
     printf("Element: %i\n", tmp->val);
     // Create reversed list
     tmp2 = malloc(test_struct_size);
     memcpy(tmp2, tmp, test_struct_size);
     list_prepend(&second_test_head, &tmp2->head);
+    trace_descend();
   }
 
   printf("Prepended list\n");

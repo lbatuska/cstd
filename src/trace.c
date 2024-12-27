@@ -1,6 +1,6 @@
 #include "trace.h"
 
-static int trace_depth = -1;
+static int trace_depth = 0;
 
 uint8 TRACE_RUNTIME = 1;
 

@@ -20,7 +20,7 @@ int trace_depth_get();
 #define trace_printf(fmt, ...)                                                 \
   do {                                                                         \
     if (TRACE_RUNTIME) {                                                       \
-      for (int i = 0; i < trace_depth_get(); ++i) {                            \
+      for (int i = 1; i < trace_depth_get(); ++i) {                            \
         printf("\t");                                                          \
       }                                                                        \
       printf("|> ");                                                           \
@@ -31,7 +31,7 @@ int trace_depth_get();
 #define trace_fprintf(stream, fmt, ...)                                        \
   do {                                                                         \
     if (TRACE_RUNTIME) {                                                       \
-      for (int i = 0; i < trace_depth_get(); ++i) {                            \
+      for (int i = 1; i < trace_depth_get(); ++i) {                            \
         fprintf(stream, "\t");                                                 \
       }                                                                        \
       fprintf(stream, "|> ");                                                  \

@@ -14,6 +14,8 @@
         same_type(*(member_ptr), ((container_type *)0)->container_member) ||   \
             same_type(*(member_ptr), void),                                    \
         "pointer type mismatch in container_of()");                            \
+    trace_printf("container_of(%s, %s, %s)\n", #member_ptr, #container_type,   \
+                 #container_member);                                           \
     ((container_type *)(((void *)(member_ptr)) -                               \
                         offsetof(container_type, container_member)));          \
   })
