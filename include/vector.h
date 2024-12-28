@@ -19,10 +19,11 @@ struct vector {
 
 #define VECTOR_INIT(name, capacity, element)                                   \
   trace_printf("VECTOR_INIT(%s, %s, %s)\n", #name, #capacity, #element);       \
-  struct vector name = {.cap = capacity,                                       \
-                        .size = 0,                                             \
-                        .data = malloc(sizeof(element) * capacity),            \
-                        .elem_size = sizeof(element)}
+  struct vector name = {                                                       \
+      .cap = (capacity ? capacity : 1),                                        \
+      .size = 0,                                                               \
+      .data = malloc(sizeof(element) * (capacity ? capacity : 1)),             \
+      .elem_size = sizeof(element)}
 
 void __vector_expand_if_full(struct vector *vector);
 
